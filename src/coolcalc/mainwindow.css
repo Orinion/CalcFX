@@ -1,0 +1,33 @@
+/*
+ * Empty Stylesheet file.
+ */
+.root{
+    -fx-background-color: #383838;
+    -fx-font-size: 20pt;
+    //-fx-padding: 10;
+}
+.label{
+    //-fx-fill: #F8F8F8;
+    -fx-text-fill: #D8D8D8;
+}
+#titleBox{
+    -fx-background-color: #282828;
+}
+.button{
+    
+    -fx-border-color: transparent;//#181818;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-focus-traversable: false;
+    -fx-font-weight: 1;
+}
+#button-Operator{
+    -fx-base: #f5933c;
+    -fx-fill:  #383838;
+    -fx-text-fill: #E8E8E8;
+    -fx-font-weight: bold;
+}
+.mainFxmlClass {
+    
+}
+
