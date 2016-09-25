@@ -24,7 +24,7 @@ public class CoolCalc extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new  FXMLLoader(this.getClass().getResource("MainWindow.fxml"));
         AnchorPane pane = loader.load();
-        MainWindowController controller =  loader.getController();
+        //MainWindowController controller =  loader.getController();
         Scene scene = new Scene(pane);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.getIcons().add(icon);

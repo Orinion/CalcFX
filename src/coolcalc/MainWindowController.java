@@ -31,6 +31,7 @@ public class MainWindowController implements Initializable {
     char operation = ' ';
     StringProperty cashed = null;
     double  posX,posY;
+    
     // <editor-fold defaultstate="collapsed" desc="Elemente">
     @FXML
     HBox titleBox;
@@ -46,22 +47,16 @@ public class MainWindowController implements Initializable {
         // TODO
         cashe();
         
-        titleBox.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent mouseEvent) 
-            {
-                Stage act =(Stage)titleBox.getScene().getWindow();
-                 posX = act.getX() - mouseEvent.getScreenX();
-                 posY = act.getY() - mouseEvent.getScreenY();
-            }
+        titleBox.setOnMousePressed((MouseEvent mouseEvent) -> {
+            Stage act =(Stage)titleBox.getScene().getWindow();
+            posX = act.getX() - mouseEvent.getScreenX();
+            posY = act.getY() - mouseEvent.getScreenY();
         });
 
-        titleBox.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Stage act =(Stage)titleBox.getScene().getWindow();
-                act.setX(event.getScreenX() + posX);
-                act.setY(event.getScreenY() + posY);
-            }
+        titleBox.setOnMouseDragged((MouseEvent event) -> {
+            Stage act =(Stage)titleBox.getScene().getWindow();
+            act.setX(event.getScreenX() + posX);
+            act.setY(event.getScreenY() + posY);
         });
     }
     
@@ -72,27 +67,23 @@ public class MainWindowController implements Initializable {
         label.textProperty().unbind();
         cashed = acteq;
         acteq = new SimpleStringProperty("0");
-        acteq.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                
-                if (newValue.length() > 1 && newValue.startsWith("0") && !newValue.startsWith("0."))
-                    acteq.set(newValue.substring(1));//remove '0' 
-                
-                if(newValue.startsWith("-0") && !newValue.startsWith("-0.") && newValue.length() > 2)
-                    acteq.set(newValue.replace("-0", "-"));//remove '0'
-                
-                if(newValue.startsWith(".")) 
-                    acteq.set(0 + newValue);//add 0
-                
-                
-                //if(newValue.contains(".") && newValue.endsWith("0"))
-                //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "0"
-                //if(newValue.endsWith("."))
-                //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "."
-                
-            }
+        acteq.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            System.out.println(newValue);
+            
+            if (newValue.length() > 1 && newValue.startsWith("0") && !newValue.startsWith("0."))
+                acteq.set(newValue.substring(1));//remove '0'
+            
+            if(newValue.startsWith("-0") && !newValue.startsWith("-0.") && newValue.length() > 2)
+                acteq.set(newValue.replace("-0", "-"));//remove '0'
+            
+            if(newValue.startsWith("."))
+                acteq.set(0 + newValue);//add 0
+            
+            
+            //if(newValue.contains(".") && newValue.endsWith("0"))
+            //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "0"
+            //if(newValue.endsWith("."))
+            //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "."
         });
         label.textProperty().bind(acteq);
     }
