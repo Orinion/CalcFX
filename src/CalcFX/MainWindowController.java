@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package coolcalc;
+package CalcFX;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,11 +26,12 @@ import javafx.stage.Stage;
  */
 public class MainWindowController implements Initializable {
 
-    StringProperty acteq =null;
+    StringProperty acteq = null;
     boolean maximized = false;
     char operation = ' ';
     StringProperty cashed = null;
-    double  posX,posY;
+    double posX, posY;
+    
     // <editor-fold defaultstate="collapsed" desc="Elemente">
     @FXML
     HBox titleBox;
@@ -45,27 +46,27 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cashe();
-        
+
         titleBox.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent mouseEvent) 
-            {
-                Stage act =(Stage)titleBox.getScene().getWindow();
-                 posX = act.getX() - mouseEvent.getScreenX();
-                 posY = act.getY() - mouseEvent.getScreenY();
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage act = (Stage) titleBox.getScene().getWindow();
+                posX = act.getX() - mouseEvent.getScreenX();
+                posY = act.getY() - mouseEvent.getScreenY();
             }
         });
 
         titleBox.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Stage act =(Stage)titleBox.getScene().getWindow();
+                Stage act = (Stage) titleBox.getScene().getWindow();
                 act.setX(event.getScreenX() + posX);
                 act.setY(event.getScreenY() + posY);
             }
         });
     }
-    
-     void cashe() {
+
+    void cashe() {
         if (operation != ' ') {
             pressedopE();
         }
@@ -76,34 +77,37 @@ public class MainWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.println(newValue);
-                
-                if (newValue.length() > 1 && newValue.startsWith("0") && !newValue.startsWith("0."))
+
+                if (newValue.length() > 1 && newValue.startsWith("0") && !newValue.startsWith("0.")) {
                     acteq.set(newValue.substring(1));//remove '0' 
-                
-                if(newValue.startsWith("-0") && !newValue.startsWith("-0.") && newValue.length() > 2)
+                }
+                if (newValue.startsWith("-0") && !newValue.startsWith("-0.") && newValue.length() > 2) {
                     acteq.set(newValue.replace("-0", "-"));//remove '0'
-                
-                if(newValue.startsWith(".")) 
+                }
+                if (newValue.startsWith(".")) {
                     acteq.set(0 + newValue);//add 0
-                
-                
+                }
+
                 //if(newValue.contains(".") && newValue.endsWith("0"))
                 //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "0"
                 //if(newValue.endsWith("."))
                 //    acteq.set(newValue.substring(0, newValue.length()-2));//remove "."
-                
             }
         });
         label.textProperty().bind(acteq);
     }
-     public static double round(double value, int places) {
-    if (places < 0) throw new IllegalArgumentException();
 
-    long factor = (long) Math.pow(10, places);
-    value = value * factor;
-    long tmp = Math.round(value);
-    return (double) tmp / factor;
-}
+    public static double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+    
     //<editor-fold defaultstate="collapsed" desc="WindowEvents">
 
     @FXML
@@ -129,7 +133,6 @@ public class MainWindowController implements Initializable {
     }
 
 //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="NrEvents">
     @FXML
     void pressednr0() {
@@ -235,8 +238,6 @@ public class MainWindowController implements Initializable {
         operation = 'a';
     }
 
-   
-
     @FXML
     void pressedopE() {
         double a, n;
@@ -263,10 +264,11 @@ public class MainWindowController implements Initializable {
             case 'd'://divide
                 a = Double.parseDouble(cashed.get());
                 n = Double.parseDouble(acteq.get());
-                if(n==0)
-                    e=0;
-                else
+                if (n == 0) {
+                    e = 0;
+                } else {
                     e = a / n;
+                }
                 break;
             case 'p'://Percentage
                 a = Double.parseDouble(cashed.get());
@@ -274,12 +276,14 @@ public class MainWindowController implements Initializable {
                 e = Math.pow(a, n);
                 break;
         }
-        String ergebnis = round(e,2) + "";
-        
-        while(ergebnis.contains(".") && ergebnis.endsWith("0"))
-                    ergebnis = ergebnis.substring(0, ergebnis.length()-2);//remove "0"
-        while(ergebnis.endsWith("."))
-                    ergebnis = ergebnis.substring(0, ergebnis.length()-2);//remove "."
+        String ergebnis = round(e, 2) + "";
+
+        while (ergebnis.contains(".") && ergebnis.endsWith("0")) {
+            ergebnis = ergebnis.substring(0, ergebnis.length() - 2);//remove "0"
+        }
+        while (ergebnis.endsWith(".")) {
+            ergebnis = ergebnis.substring(0, ergebnis.length() - 2);//remove "."
+        }
         acteq.set(ergebnis);
         operation = ' ';
         cashed = null;
