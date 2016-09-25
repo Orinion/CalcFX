@@ -4,10 +4,8 @@
 .root{
     -fx-background-color: #383838;
     -fx-font-size: 20pt;
-    //-fx-padding: 10;
 }
 .label{
-    //-fx-fill: #F8F8F8;
     -fx-text-fill: #D8D8D8;
 }
 #titleBox{
@@ -15,7 +13,7 @@
 }
 .button{
     
-    -fx-border-color: transparent;//#181818;
+    -fx-border-color: transparent;
     -fx-border-radius: 0;
     -fx-background-radius: 0;
     -fx-focus-traversable: false;
